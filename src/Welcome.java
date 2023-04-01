@@ -1,0 +1,35 @@
+import java.util.Scanner;
+
+public class Welcome {
+
+        public void welcomeMethod(){
+            Scanner input = new Scanner(System.in);
+            System.out.println("==============================================");
+            System.out.println("    Welcome to Airline Reservation System");
+            System.out.println("==============================================");
+            System.out.println(".................MENU OPTIONS.................");
+            System.out.println("    <1> Sign in");
+            System.out.println("    <2> Sign up");
+            int num = input.nextInt();
+            if(num == 1){
+                System.out.println("Signing in");
+                User user = new User();
+                System.out.println("Enter Your Username");
+                String userName = input.next();
+                user.setUserName(userName);
+                if(user.isAdmin(userName)){
+                    System.out.println("Salam Admin:)");
+                }
+                System.out.println("Enter Your Password");
+                user.setPassword(input.next());
+            }
+            if(num == 2){
+                System.out.println("Signing up");
+                System.out.println("Select an Username");
+                System.out.println("Enter Your Username");
+                System.out.println("Select an Password");
+                System.out.println("Enter Your Password");
+            }
+        }
+
+}
