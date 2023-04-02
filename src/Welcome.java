@@ -12,23 +12,26 @@ public class Welcome {
             System.out.println("    <2> Sign up");
             int num = input.nextInt();
             if(num == 1){
-                System.out.println("Signing in");
+                System.out.println("Signing in...");
                 User user = new User();
                 System.out.println("Enter Your Username");
                 String userName = input.next();
+
                 user.setUserName(userName);
-                if(user.isAdmin(userName)){
-                    System.out.println("Salam Admin:)");
-                }
+
                 System.out.println("Enter Your Password");
-                user.setPassword(input.next());
+                String password = input.next();
+                user.setPassword(password);
+
+                if(user.isAdmin(userName, password)){
+                    Admin admin = new Admin();
+                    admin.AdminMenu();
+                }
             }
             if(num == 2){
-                System.out.println("Signing up");
+                System.out.println("Signing up...");
                 System.out.println("Select an Username");
-                System.out.println("Enter Your Username");
                 System.out.println("Select an Password");
-                System.out.println("Enter Your Password");
             }
         }
 

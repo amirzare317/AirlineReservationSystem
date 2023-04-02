@@ -20,8 +20,8 @@ public class User {
     public void setUserName(String userName) {
         this.userName = userName;
     }
-    public boolean isAdmin(String userName){
-        if(userName.equals(userName)){
+    public boolean isAdmin(String userName , String password){
+        if(userName.equals(userName) && password.equals(password)){
             return true;
         }
         else {
