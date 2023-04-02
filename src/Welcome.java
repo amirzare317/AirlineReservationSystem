@@ -26,7 +26,10 @@ public class Welcome {
                 if(user.isAdmin(userName, password)){
                     Admin admin = new Admin();
                     admin.AdminMenu();
+                    admin.options();
+                    admin.showTable();
                 }
+
             }
             if(num == 2){
                 System.out.println("Signing up...");
