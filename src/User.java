@@ -1,8 +1,8 @@
 public class User {
     private String userName;
-    private String password = "ُAli";
-
+    private String password;
     private int charge;
+    String string = new String();
 
 
 //    public User(String userName, String password, int charge) {
@@ -21,7 +21,8 @@ public class User {
         this.userName = userName;
     }
     public boolean isAdmin(String userName , String password){
-        if(userName.equals(userName) && password.equals(password)){
+
+        if(userName.equals("admin") && password.equals("admin")){
             return true;
         }
         else {

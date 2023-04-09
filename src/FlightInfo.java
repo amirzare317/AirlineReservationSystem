@@ -17,6 +17,9 @@ public class FlightInfo {
         this.seats = seats;
     }
 
+    public FlightInfo() {
+    }
+
     public String getFlightId() {
         return flightId;
     }

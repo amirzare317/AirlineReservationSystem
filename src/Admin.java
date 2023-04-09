@@ -1,8 +1,13 @@
 import javax.management.MBeanAttributeInfo;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Admin {
-    public void AdminMenu(){
+    int i = 2;
+    Scanner input = new Scanner(System.in);
+    String string = new String();
+    String str = new String();
+    public void adminMenu(){
         System.out.println("===========================");
         System.out.println("    Admin MENU OPTIONS");
         System.out.println("===========================");
@@ -13,32 +18,47 @@ public class Admin {
         System.out.println("    <4> Flight schedules");
         System.out.println("    <0> Sign out");
     }
-    public void options(){
-        Scanner input = new Scanner(System.in);
-        int number = input.nextInt();
-        switch (number){
-            case 1:
-                //--------------
-                break;
-            case 2:
-                //-------------
-                break;
-            case 3:
-                //-----------------
-                break;
-            case 4:
-                tableOfFlights();
-                break;
-            case 0:
-                //------------------
-                break;
-            default:
-                System.out.println("Wrong input!!!");
-                break;
 
+    public void options(){
+        int number = 10;
+
+        while (number != 0) {
+            number = input.nextInt();
+            switch (number) {
+                case 1:
+                    System.out.println("Adding...");
+                    add();
+                    adminMenu();
+                    break;
+                case 2:
+                    System.out.println("Updating...");
+                    System.out.println("Enter the flight ID:");
+                    string = input.next();
+                    update(string);
+                    break;
+                case 3:
+                    System.out.println("Deleting...");
+                    System.out.println("Enter the flight ID:");
+                    string = input.next();
+                    delete(string);
+                    adminMenu();
+                    break;
+                case 4:
+                    tableOfFlights();
+                    showTable();
+
+//                    adminMenu();
+                    break;
+                case 0:
+                    break;
+
+                default:
+                    System.out.println("Wrong input!!!");
+                    break;
+            }
         }
     }
-    FlightInfo[] flights = new FlightInfo[5];
+    FlightInfo[] flights = new FlightInfo[15];
     public void tableOfFlights(){
 
         flights[0] = new FlightInfo("WX-12" , "Yazd", "Tehran", "1401-12-10", "12:30", 700_000, 51 );
@@ -50,10 +70,116 @@ public class Admin {
         System.out.printf("%-15s %-15s %-15s %-15s %-15s %-15s %-15s\n", "FlightId", "Origin", "Destination", "Date", "Time", "Price", "Seats");
         System.out.println("-----------------------------------------------------------------------------------------------------");
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < flights.length; i++) {
+            if(flights[i] != null){
             System.out.printf("%-15s %-15s %-15s %-15s %-15s %-15d %-15d\n", flights[i].getFlightId(), flights[i].getOrigin(), flights[i].getDestination(), flights[i].getDate(), flights[i].getTime(), flights[i].getPrice(), flights[i].getSeats());
             System.out.println(".....................................................................................................");
-
         }
+        }
+    }
+    public void add(){
+        ++i;
+        flights[i] = new FlightInfo();
+        System.out.println("Enter FlightID:");
+        flights[i].setFlightId(input.next());
+
+        System.out.println("Enter Origin:");
+        flights[i].setOrigin(input.next());
+
+        System.out.println("Enter Destination:");
+        flights[i].setDestination(input.next());
+
+        System.out.println("Enter Date:");
+        flights[i].setDate(input.next());
+
+        System.out.println("Enter Time:");
+        flights[i].setTime(input.next());
+
+        System.out.println("Enter Price:");
+        flights[i].setPrice(input.nextInt());
+
+        System.out.println("Enter Free Seats:");
+        flights[i].setSeats(input.nextInt());
+//        if(flights[i] != null) {
+//            System.out.printf("%-15s %-15s %-15s %-15s %-15s %-15d %-15d\n", flights[i].getFlightId(), flights[i].getOrigin(), flights[i].getDestination(), flights[i].getDate(), flights[i].getTime(), flights[i].getPrice(), flights[i].getSeats());
+//        }
+
+    }
+    public void delete(String string){
+        for (int i = 0; i < flights.length; i++) {
+            if (flights[i] != null && flights[i].getFlightId().equals(string)){
+                flights[i] = null;
+            }
+        }
+    }
+
+    public void update(String string){
+        for (int i = 0; i < flights.length; i++) {
+            if(flights[i] != null && flights[i].getFlightId().equals(string)){
+                System.out.println("Update " + flights[i].getFlightId());
+                System.out.println("Change Origin (Press N to escape)");
+                str = input.next();
+                if(str.equals("N")){
+                    break;
+                }
+                else {
+                    flights[i].setOrigin(str);
+                }
+
+                System.out.println("Change Destination (Press N to escape)");
+                str = input.next();
+                if(str.equals("N")){
+                    break;
+                }
+                else {
+                    flights[i].setDestination(str);
+                }
+
+                System.out.println("Change Date (Press N to escape)");
+                str = input.next();
+                if(str.equals("N")){
+                    break;
+                }
+                else {
+                    flights[i].setDate(str);
+                }
+
+                System.out.println("Change Time (Press N to escape)");
+                str = input.next();
+                if(str.equals("N")){
+                    break;
+                }
+                else {
+                    flights[i].setTime(str);
+                }
+
+                System.out.println("Change Price (Press N to escape)");
+                str = input.next();
+                if(str.equals("N")){
+                    break;
+                }
+                else {
+                    flights[i].setPrice(Integer.parseInt(str));
+                }
+
+                System.out.println("Change Seats (Press N to escape)");
+                str = input.next();
+                if(str.equals("N")){
+                    break;
+                }
+                else {
+                    flights[i].setSeats(Integer.parseInt(str));
+                }
+            }
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Admin{" +
+                "i=" + i +
+                ", input=" + input +
+                ", flights=" + Arrays.toString(flights) +
+                '}';
     }
 }

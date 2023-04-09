@@ -1,7 +1,8 @@
 import java.util.Scanner;
 
 public class Welcome {
-
+//        String userName = new String();
+//        String password = new String();
         public void welcomeMethod(){
             Scanner input = new Scanner(System.in);
             System.out.println("==============================================");
@@ -25,9 +26,10 @@ public class Welcome {
 
                 if(user.isAdmin(userName, password)){
                     Admin admin = new Admin();
-                    admin.AdminMenu();
+                    admin.adminMenu();
                     admin.options();
-                    admin.showTable();
+                    //admin.showTable();
+
                 }
 
             }
