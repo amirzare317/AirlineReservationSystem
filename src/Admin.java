@@ -7,6 +7,8 @@ public class Admin {
     Scanner input = new Scanner(System.in);
     String string = new String();
     String str = new String();
+
+    int num;
     public void adminMenu(){
         System.out.println("===========================");
         System.out.println("    Admin MENU OPTIONS");
@@ -32,12 +34,14 @@ public class Admin {
                     break;
                 case 2:
                     System.out.println("Updating...");
+                    tableOfFlights();
                     System.out.println("Enter the flight ID:");
                     string = input.next();
                     update(string);
                     break;
                 case 3:
                     System.out.println("Deleting...");
+                    tableOfFlights();
                     System.out.println("Enter the flight ID:");
                     string = input.next();
                     delete(string);
@@ -117,69 +121,90 @@ public class Admin {
         for (int i = 0; i < flights.length; i++) {
             if(flights[i] != null && flights[i].getFlightId().equals(string)){
                 System.out.println("Update " + flights[i].getFlightId());
-                System.out.println("Change Origin (Press N to escape)");
-                str = input.next();
-                if(str.equals("N")){
-                    break;
-                }
-                else {
-                    flights[i].setOrigin(str);
-                }
+                if (updateOrigin(i)) break;
 
-                System.out.println("Change Destination (Press N to escape)");
-                str = input.next();
-                if(str.equals("N")){
-                    break;
-                }
-                else {
-                    flights[i].setDestination(str);
-                }
+                if (updateDestination(i)) continue;
 
-                System.out.println("Change Date (Press N to escape)");
-                str = input.next();
-                if(str.equals("N")){
-                    break;
-                }
-                else {
-                    flights[i].setDate(str);
-                }
+                if (updateDate(i)) continue;
 
-                System.out.println("Change Time (Press N to escape)");
-                str = input.next();
-                if(str.equals("N")){
-                    break;
-                }
-                else {
-                    flights[i].setTime(str);
-                }
+                if (updateTime(i)) continue;
 
-                System.out.println("Change Price (Press N to escape)");
-                str = input.next();
-                if(str.equals("N")){
-                    break;
-                }
-                else {
-                    flights[i].setPrice(Integer.parseInt(str));
-                }
+                if (updatePrice(i)) continue;
 
-                System.out.println("Change Seats (Press N to escape)");
-                str = input.next();
-                if(str.equals("N")){
-                    break;
-                }
-                else {
-                    flights[i].setSeats(Integer.parseInt(str));
-                }
+                updateSeats(i);
             }
         }
     }
 
-    @Override
-    public String toString() {
-        return "Admin{" +
-                "i=" + i +
-                ", input=" + input +
-                ", flights=" + Arrays.toString(flights) +
-                '}';
+    private void updateSeats(int i) {
+        System.out.println("Change Seats (Press N to escape)");
+        str = input.next();
+        if(str == "N"){
+            return;
+        }
+        else {
+            flights[i].setSeats(Integer.parseInt(str));
+        }
     }
+
+    private boolean updatePrice(int i) {
+        System.out.println("Change Price (Press N to escape)");
+        str = input.next();
+        if(str == "N"){
+            return true;
+        }
+        else {
+            flights[i].setPrice(Integer.parseInt(str));
+        }
+        return false;
+    }
+
+    private boolean updateTime(int i) {
+        System.out.println("Change Time (Press N to escape)");
+        str = input.next();
+        if(str.equalsIgnoreCase("N")){
+            return true;
+        }
+        else {
+            flights[i].setTime(str);
+        }
+        return false;
+    }
+
+    private boolean updateDate(int i) {
+        System.out.println("Change Date (Press N to escape)");
+        str = input.next();
+        if(str == "N"){
+            return true;
+        }
+        else {
+            flights[i].setDate(str);
+        }
+        return false;
+    }
+
+    private boolean updateDestination(int i) {
+        System.out.println("Change Destination (Press N to escape)");
+        str = input.next();
+        if(str == "N"){
+            return true;
+        }
+        else {
+            flights[i].setDestination(str);
+        }
+        return false;
+    }
+
+    private boolean updateOrigin(int i) {
+        System.out.println("Change Origin (Press N to escape)");
+        str = input.next();
+        if(str.equalsIgnoreCase("N")){
+            return true;
+        }
+        else {
+            flights[i].setOrigin(str);
+        }
+        return false;
+    }
+
 }

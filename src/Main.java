@@ -3,6 +3,5 @@ public class Main {
 
         Welcome welcome = new Welcome();
         welcome.welcomeMethod();
-
     }
 }

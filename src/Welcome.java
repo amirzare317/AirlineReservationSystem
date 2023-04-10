@@ -1,8 +1,6 @@
 import java.util.Scanner;
 
 public class Welcome {
-//        String userName = new String();
-//        String password = new String();
         public void welcomeMethod(){
             Scanner input = new Scanner(System.in);
             System.out.println("==============================================");
@@ -28,15 +26,20 @@ public class Welcome {
                     Admin admin = new Admin();
                     admin.adminMenu();
                     admin.options();
-                    //admin.showTable();
-
                 }
 
             }
             if(num == 2){
+                Passenger passenger = new Passenger();
                 System.out.println("Signing up...");
-                System.out.println("Select an Username");
-                System.out.println("Select an Password");
+
+                System.out.println("Create an Username");
+                String passengerUserName = input.next();
+
+                System.out.println("Create an Password");
+                String passengerPassword = input.next();
+                passenger.registration(passengerUserName, passengerPassword);
+                passenger.passengerMenu();
             }
         }
 
