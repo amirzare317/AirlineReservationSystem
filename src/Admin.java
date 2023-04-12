@@ -65,7 +65,7 @@ public class Admin {
             }
         }
     }
-    FlightInfo[] flights = new FlightInfo[15];
+    public FlightInfo[] flights = new FlightInfo[15];
     public void tableOfFlights(){
 
         flights[0] = new FlightInfo("WX-12" , "Yazd", "Tehran", "1401-12-10", "12:30", 700_000, 51 );
@@ -153,124 +153,46 @@ public class Admin {
         }
     }
 
-    private boolean updatePrice(int i) {
+    private void updatePrice(int i) {
         System.out.println("Change Price (Press N to escape)");
         str = input.next();
-        if(str.equalsIgnoreCase("N")){
-            return true;
-        }
-        else {
+        if(!str.equalsIgnoreCase("N")){
             flights[i].setPrice(Integer.parseInt(str));
         }
-        return false;
     }
 
-    private boolean updateTime(int i) {
+    private void updateTime(int i) {
         System.out.println("Change Time (Press N to escape)");
         str = input.next();
-        if(str.equalsIgnoreCase("N")){
-            return true;
-        }
-        else {
+        if(!str.equalsIgnoreCase("N")){
             flights[i].setTime(str);
         }
-        return false;
     }
 
-    private boolean updateDate(int i) {
+    private void updateDate(int i) {
         System.out.println("Change Date (Press N to escape)");
         str = input.next();
-        if(str.equalsIgnoreCase("N")){
-            return true;
-        }
-        else {
+        if(!str.equalsIgnoreCase("N")){
             flights[i].setDate(str);
         }
-        return false;
     }
 
-    private boolean updateDestination(int i) {
+    private void updateDestination(int i) {
         System.out.println("Change Destination (Press N to escape)");
         str = input.next();
-        if(str.equalsIgnoreCase("N")){
-            return true;
-        }
-        else {
+        if(!str.equalsIgnoreCase("N")){
             flights[i].setDestination(str);
         }
-        return false;
     }
 
-    private boolean updateOrigin(int i) {
+    private void updateOrigin(int i) {
         System.out.println("Change Origin (Press N to escape)");
         str = input.next();
-        if(str.equalsIgnoreCase("N")){
-            return true;
-        }
-        else {
+        if(!str.equalsIgnoreCase("N")){
             flights[i].setOrigin(str);
         }
-        return false;
     }
 
-    //*****************************************************************************************************************
-    public void search(){
-        System.out.println("Filtering the features of flight:");
-        if (filterOrigin()) return;
-        if (filterDestination()) return;
-        if (filterDate()) return;
-        if (filterTime()) return;
-        if (filterPrice()) return;
-    }
-    private boolean filterOrigin() {
-        System.out.println("Filtering Origin (Press N to escape)");
-        string = input.next();
-        for (int i = 0; i < flights.length; i++) {
-            if (flights[i] != null && ((flights[i].getOrigin().equals(string)) || (string.equalsIgnoreCase("N")))) {
-                return true;
-            }
-        }
-        return false;
-    }
-    private boolean filterDestination() {
-        System.out.println("Filtering Destination (Press N to escape)");
-        string = input.next();
-        for (int i = 0; i < flights.length; i++) {
-            if(flights[i] != null && ((flights[i].getDestination().equals(string)) || (string.equalsIgnoreCase("N")))){
-                return true;
-            }
-        }
-        return false;
-    }
-    private boolean filterDate() {
-        System.out.println("Filtering Date (Press N to escape)");
-        string = input.next();
-        for (int i = 0; i < flights.length; i++) {
-            if(flights[i] != null && ((flights[i].getDate().equals(string)) || (string.equalsIgnoreCase("N")))){
-                return true;
-            }
-        }
-        return false;
-    }
-    private boolean filterTime() {
-        System.out.println("Filtering Time (Press N to escape)");
-        string = input.next();
-        for (int i = 0; i < flights.length; i++) {
-            if(flights[i] != null && ((flights[i].getTime().equals(string)) || (string.equalsIgnoreCase("N")))){
-                return true;
-            }
-        }
-        return false;
-    }
-    private boolean filterPrice() {
-        System.out.println("Filtering Price (Press N to escape)");
-        string = input.next();
-        for (int i = 0; i < flights.length; i++) {
-            if(flights[i] != null && ((flights[i].getPrice() == Integer.parseInt(string)) || (string.equalsIgnoreCase("N")))){
-                return true;
-            }
-        }
-        return false;
-    }
+
 
 }

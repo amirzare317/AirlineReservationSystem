@@ -2,9 +2,10 @@ import java.util.Scanner;
 
 public class Passenger {
     Scanner input = new Scanner(System.in);
-    Admin admin = new Admin();
+    Admin infoAdmin = new Admin();
     User[] passengerUser = new User[30];
     String string = new String();
+
     int i = 0;
 
 
@@ -36,7 +37,7 @@ public class Passenger {
                     break;
                 case 2:
                     System.out.println("Searching flight tickets...");
-                    admin.search();
+                    search();
                     break;
                 case 3:
                     System.out.println("Booking tickets");
@@ -73,5 +74,80 @@ public class Passenger {
         passengerUser[i].setCharge(chargeAmount);
     }
 
+
+    //*****************************************************************************************************************
+    public void search(){
+        filterOrigin();
+        filterDestination();
+        filterDate();
+        filterTime();
+        filterPrice();
+
+    }
+    public void filterOrigin() {
+        System.out.println("Filtering Origin (Press N to escape)");
+        string = input.next();
+        int flagOrigin = 1;
+        if (string.equalsIgnoreCase("N")){
+            flagOrigin = 0;
+        }
+        for (int i = 0; i < infoAdmin.flights.length; i++) {
+            if (infoAdmin.flights[i] != null && infoAdmin.flights[i].getOrigin().equals(string)) {
+                String wantedOrigin = string;
+            }
+        }
+    }
+    public void filterDestination() {
+        System.out.println("Filtering Destination (Press N to escape)");
+        string = input.next();
+        int flagDestination = 1;
+        if (string.equalsIgnoreCase("N")){
+            flagDestination = 0;
+        }
+        for (int i = 0; i < infoAdmin.flights.length; i++) {
+            if(infoAdmin.flights[i] != null && infoAdmin.flights[i].getDestination().equals(string)){
+                String wantedDestination = string;
+            }
+        }
+    }
+    public void filterDate() {
+        System.out.println("Filtering Date (Press N to escape)");
+        string = input.next();
+        int flagDate = 1;
+        if (string.equalsIgnoreCase("N")){
+            flagDate = 0;
+        }
+        for (int i = 0; i < infoAdmin.flights.length; i++) {
+            if(infoAdmin.flights[i] != null && infoAdmin.flights[i].getDate().equals(string)){
+                String wantedDate = string;
+            }
+        }
+    }
+    public void filterTime() {
+        System.out.println("Filtering Time (Press N to escape)");
+        string = input.next();
+        int flagTime = 1;
+        if (string.equalsIgnoreCase("N")){
+            flagTime = 0;
+        }
+        for (int i = 0; i < infoAdmin.flights.length; i++) {
+            if(infoAdmin.flights[i] != null && infoAdmin.flights[i].getTime().equals(string)){
+                String wantedTime = string;
+            }
+        }
+    }
+    public void filterPrice() {
+        System.out.println("Filtering Price (Press N to escape)");
+        string = input.next();
+        int flagPrice = 1;
+        if (string.equalsIgnoreCase("N")){
+            flagPrice = 0;
+        }
+        for (int i = 0; i < infoAdmin.flights.length; i++) {
+            if(infoAdmin.flights[i] != null && infoAdmin.flights[i].getPrice() == Integer.parseInt(string)){
+                int wantedPrice = Integer.parseInt(string);
+            }
+        }
+    }
 
 }

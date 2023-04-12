@@ -6,6 +6,7 @@ public class Welcome {
             Admin admin = new Admin();
             Passenger passenger = new Passenger();
 
+            while (true){
             System.out.println("==============================================");
             System.out.println("    Welcome to Airline Reservation System");
             System.out.println("==============================================");
@@ -44,6 +45,7 @@ public class Welcome {
                 passenger.showPassengerMenu();
                 passenger.passengerOption();
             }
+        }
         }
 
 }
