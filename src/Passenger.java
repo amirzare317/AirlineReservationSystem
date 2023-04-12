@@ -7,7 +7,7 @@ public class Passenger {
     int i = 0;
 
 
-    public void passengerMenu() {
+    public void showPassengerMenu() {
         System.out.println("===========================");
         System.out.println("    PASSENGER MENU OPTIONS");
         System.out.println("===========================");

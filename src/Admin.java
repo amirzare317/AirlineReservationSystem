@@ -1,15 +1,19 @@
-import javax.management.MBeanAttributeInfo;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Admin {
+
     int i = 2;
     Scanner input = new Scanner(System.in);
     String string = new String();
     String str = new String();
 
     int num;
-    public void adminMenu(){
+
+    public Admin(){
+        tableOfFlights();
+    }
+
+    public void showAdminMenu(){
         System.out.println("===========================");
         System.out.println("    Admin MENU OPTIONS");
         System.out.println("===========================");
@@ -25,30 +29,28 @@ public class Admin {
         int number = 10;
 
         while (number != 0) {
+            showAdminMenu();
             number = input.nextInt();
             switch (number) {
                 case 1:
                     System.out.println("Adding...");
                     add();
-                    adminMenu();
+                    showAdminMenu();
                     break;
                 case 2:
                     System.out.println("Updating...");
-                    tableOfFlights();
                     System.out.println("Enter the flight ID:");
                     string = input.next();
                     update(string);
                     break;
                 case 3:
                     System.out.println("Deleting...");
-                    tableOfFlights();
                     System.out.println("Enter the flight ID:");
                     string = input.next();
                     delete(string);
-                    adminMenu();
+                    showAdminMenu();
                     break;
                 case 4:
-                    tableOfFlights();
                     showTable();
 
 //                    adminMenu();
@@ -121,15 +123,15 @@ public class Admin {
         for (int i = 0; i < flights.length; i++) {
             if(flights[i] != null && flights[i].getFlightId().equals(string)){
                 System.out.println("Update " + flights[i].getFlightId());
-                if (updateOrigin(i)) break;
+                updateOrigin(i);
 
-                if (updateDestination(i)) continue;
+                updateDestination(i);
 
-                if (updateDate(i)) continue;
+                updateDate(i);
 
-                if (updateTime(i)) continue;
+                updateTime(i);
 
-                if (updatePrice(i)) continue;
+                updatePrice(i);
 
                 updateSeats(i);
             }
@@ -139,10 +141,7 @@ public class Admin {
     private void updateSeats(int i) {
         System.out.println("Change Seats (Press N to escape)");
         str = input.next();
-        if(str == "N"){
-            return;
-        }
-        else {
+        if(!str.equalsIgnoreCase("N")){
             flights[i].setSeats(Integer.parseInt(str));
         }
     }
@@ -150,7 +149,7 @@ public class Admin {
     private boolean updatePrice(int i) {
         System.out.println("Change Price (Press N to escape)");
         str = input.next();
-        if(str == "N"){
+        if(str.equalsIgnoreCase("N")){
             return true;
         }
         else {
@@ -174,7 +173,7 @@ public class Admin {
     private boolean updateDate(int i) {
         System.out.println("Change Date (Press N to escape)");
         str = input.next();
-        if(str == "N"){
+        if(str.equalsIgnoreCase("N")){
             return true;
         }
         else {
@@ -186,7 +185,7 @@ public class Admin {
     private boolean updateDestination(int i) {
         System.out.println("Change Destination (Press N to escape)");
         str = input.next();
-        if(str == "N"){
+        if(str.equalsIgnoreCase("N")){
             return true;
         }
         else {

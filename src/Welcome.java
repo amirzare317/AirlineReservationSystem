@@ -3,6 +3,9 @@ import java.util.Scanner;
 public class Welcome {
         public void welcomeMethod(){
             Scanner input = new Scanner(System.in);
+            Admin admin = new Admin();
+            Passenger passenger = new Passenger();
+
             System.out.println("==============================================");
             System.out.println("    Welcome to Airline Reservation System");
             System.out.println("==============================================");
@@ -23,14 +26,11 @@ public class Welcome {
                 user.setPassword(password);
 
                 if(user.isAdmin(userName, password)){
-                    Admin admin = new Admin();
-                    admin.adminMenu();
                     admin.options();
                 }
 
             }
             if(num == 2){
-                Passenger passenger = new Passenger();
                 System.out.println("Signing up...");
 
                 System.out.println("Create an Username");
@@ -39,7 +39,7 @@ public class Welcome {
                 System.out.println("Create an Password");
                 String passengerPassword = input.next();
                 passenger.registration(passengerUserName, passengerPassword);
-                passenger.passengerMenu();
+                passenger.showPassengerMenu();
             }
         }
 
