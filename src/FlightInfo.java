@@ -7,6 +7,7 @@ public class FlightInfo {
     private int price;
     private int seats;
 
+
     public FlightInfo(String flightId, String origin, String destination, String date, String time, int price, int seats) {
         this.flightId = flightId;
         this.origin = origin;

@@ -16,9 +16,9 @@ public class Welcome {
             if(num == 1){
                 System.out.println("Signing in...");
                 User user = new User();
+
                 System.out.println("Enter Your Username");
                 String userName = input.next();
-
                 user.setUserName(userName);
 
                 System.out.println("Enter Your Password");
@@ -38,8 +38,11 @@ public class Welcome {
 
                 System.out.println("Create an Password");
                 String passengerPassword = input.next();
+
                 passenger.registration(passengerUserName, passengerPassword);
+
                 passenger.showPassengerMenu();
+                passenger.passengerOption();
             }
         }
 

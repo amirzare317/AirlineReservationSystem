@@ -2,9 +2,16 @@ public class User {
     private String userName;
     private String password;
     private int charge;
+    private String bookedTickets;
     String string = new String();
 
+    public String getBookedTickets() {
+        return bookedTickets;
+    }
 
+    public void setBookedTickets(String bookedTickets) {
+        this.bookedTickets = bookedTickets;
+    }
 //    public User(String userName, String password, int charge) {
 //        this.userName = userName;
 //        this.password = password;

@@ -4,6 +4,7 @@ public class Passenger {
     Scanner input = new Scanner(System.in);
 
     User[] passengerUser = new User[30];
+    String string = new String();
     int i = 0;
 
 
@@ -28,16 +29,30 @@ public class Passenger {
             number = input.nextInt();
             switch (number) {
                 case 1:
+                    System.out.println("Changing password...");
+                    System.out.println("Enter your new password: ");
+                    string = input.next();
+                    passengerUser[i].setUserName(string);
                     break;
                 case 2:
+                    System.out.println("Searching flight tickets...");
+
                     break;
                 case 3:
+                    System.out.println("Booking tickets");
                     break;
                 case 4:
+                    System.out.println(":)))))");
                     break;
                 case 5:
+                    System.out.println(":)))))");
                     break;
                 case 6:
+                    System.out.println("Adding charge...");
+                    System.out.println("Enter the amount of money you want to charge");
+                    int chargeAmount = input.nextInt();
+                    charge(chargeAmount);
+                    System.out.println("Your charge is: " + passengerUser[i].getCharge());
                     break;
                 case 0:
                     break;
@@ -50,8 +65,13 @@ public class Passenger {
 
     public void registration(String userName , String password){
         i++;
+        passengerUser[i] = new User();
         passengerUser[i].setUserName(userName);
         passengerUser[i].setPassword(password);
     }
+    public void charge(int chargeAmount){
+        passengerUser[i].setCharge(chargeAmount);
+    }
+
 
 }

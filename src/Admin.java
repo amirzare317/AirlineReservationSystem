@@ -35,25 +35,26 @@ public class Admin {
                 case 1:
                     System.out.println("Adding...");
                     add();
-                    showAdminMenu();
+//                    showMessageOfAdminMenu();
                     break;
                 case 2:
                     System.out.println("Updating...");
                     System.out.println("Enter the flight ID:");
                     string = input.next();
                     update(string);
+//                    showMessageOfAdminMenu();
                     break;
                 case 3:
                     System.out.println("Deleting...");
                     System.out.println("Enter the flight ID:");
                     string = input.next();
                     delete(string);
-                    showAdminMenu();
+
+//                    showMessageOfAdminMenu();
                     break;
                 case 4:
                     showTable();
-
-//                    adminMenu();
+//                    showMessageOfAdminMenu();
                     break;
                 case 0:
                     break;
@@ -106,15 +107,16 @@ public class Admin {
 
         System.out.println("Enter Free Seats:");
         flights[i].setSeats(input.nextInt());
-//        if(flights[i] != null) {
-//            System.out.printf("%-15s %-15s %-15s %-15s %-15s %-15d %-15d\n", flights[i].getFlightId(), flights[i].getOrigin(), flights[i].getDestination(), flights[i].getDate(), flights[i].getTime(), flights[i].getPrice(), flights[i].getSeats());
-//        }
-
     }
     public void delete(String string){
         for (int i = 0; i < flights.length; i++) {
             if (flights[i] != null && flights[i].getFlightId().equals(string)){
                 flights[i] = null;
+                System.out.println("Flight deleted successfully");
+            }
+            else {
+                System.out.println("This flight ID is not valid");
+                break;
             }
         }
     }
@@ -134,6 +136,11 @@ public class Admin {
                 updatePrice(i);
 
                 updateSeats(i);
+                System.out.println("Flight updated successfully");
+            }
+            else {
+                System.out.println("This flight ID is not valid");
+                break;
             }
         }
     }
