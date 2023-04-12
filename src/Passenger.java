@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class Passenger {
     Scanner input = new Scanner(System.in);
-
+    Admin admin = new Admin();
     User[] passengerUser = new User[30];
     String string = new String();
     int i = 0;
@@ -36,7 +36,7 @@ public class Passenger {
                     break;
                 case 2:
                     System.out.println("Searching flight tickets...");
-
+                    admin.search();
                     break;
                 case 3:
                     System.out.println("Booking tickets");

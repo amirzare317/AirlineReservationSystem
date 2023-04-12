@@ -213,4 +213,64 @@ public class Admin {
         return false;
     }
 
+    //*****************************************************************************************************************
+    public void search(){
+        System.out.println("Filtering the features of flight:");
+        if (filterOrigin()) return;
+        if (filterDestination()) return;
+        if (filterDate()) return;
+        if (filterTime()) return;
+        if (filterPrice()) return;
+    }
+    private boolean filterOrigin() {
+        System.out.println("Filtering Origin (Press N to escape)");
+        string = input.next();
+        for (int i = 0; i < flights.length; i++) {
+            if (flights[i] != null && ((flights[i].getOrigin().equals(string)) || (string.equalsIgnoreCase("N")))) {
+                return true;
+            }
+        }
+        return false;
+    }
+    private boolean filterDestination() {
+        System.out.println("Filtering Destination (Press N to escape)");
+        string = input.next();
+        for (int i = 0; i < flights.length; i++) {
+            if(flights[i] != null && ((flights[i].getDestination().equals(string)) || (string.equalsIgnoreCase("N")))){
+                return true;
+            }
+        }
+        return false;
+    }
+    private boolean filterDate() {
+        System.out.println("Filtering Date (Press N to escape)");
+        string = input.next();
+        for (int i = 0; i < flights.length; i++) {
+            if(flights[i] != null && ((flights[i].getDate().equals(string)) || (string.equalsIgnoreCase("N")))){
+                return true;
+            }
+        }
+        return false;
+    }
+    private boolean filterTime() {
+        System.out.println("Filtering Time (Press N to escape)");
+        string = input.next();
+        for (int i = 0; i < flights.length; i++) {
+            if(flights[i] != null && ((flights[i].getTime().equals(string)) || (string.equalsIgnoreCase("N")))){
+                return true;
+            }
+        }
+        return false;
+    }
+    private boolean filterPrice() {
+        System.out.println("Filtering Price (Press N to escape)");
+        string = input.next();
+        for (int i = 0; i < flights.length; i++) {
+            if(flights[i] != null && ((flights[i].getPrice() == Integer.parseInt(string)) || (string.equalsIgnoreCase("N")))){
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
