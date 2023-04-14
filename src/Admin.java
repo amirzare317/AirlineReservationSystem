@@ -111,6 +111,10 @@ public class Admin {
     public void delete(String string){
         for (int i = 0; i < flights.length; i++) {
             if (flights[i] != null && flights[i].getFlightId().equals(string)){
+                if(!flights[i].isAllow()){
+                    System.out.println("Some people has registered this flight.\nYou can't delete this flight!");
+                    break;
+                }
                 flights[i] = null;
                 System.out.println("Flight deleted successfully");
             }
@@ -124,6 +128,10 @@ public class Admin {
     public void update(String string){
         for (int i = 0; i < flights.length; i++) {
             if(flights[i] != null && flights[i].getFlightId().equals(string)){
+                if(!flights[i].isAllow()){
+                    System.out.println("Some people has registered this flight.\nYou can't update this flight!");
+                    break;
+                }
                 System.out.println("Update " + flights[i].getFlightId());
                 updateOrigin(i);
 
