@@ -29,6 +29,13 @@ public class Welcome {
                 if(user.isAdmin(userName, password)){
                     admin.options();
                 }
+                if (user.isRegisteredBefore(userName, password)){
+                    passenger.showPassengerMenu();
+                    passenger.passengerOption();
+                }
+                else {
+                    System.out.println("Incorrect input !!!");
+                }
 
             }
             if(num == 2){

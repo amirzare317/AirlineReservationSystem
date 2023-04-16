@@ -3,6 +3,8 @@ public class User {
     private String password;
     private int charge;
     private String bookedTickets;
+
+    Passenger userInfo = new Passenger();
     String string = new String();
 
     public String getBookedTickets() {
@@ -27,15 +29,40 @@ public class User {
     public void setUserName(String userName) {
         this.userName = userName;
     }
-    public boolean isAdmin(String userName , String password){
 
+    int index = 20;
+    public void findI(String userName,String password){
+        int flag = 0;
+        for (int i = 0; i < userInfo.passengerUser.length; i++) {
+            if ((userInfo.passengerUser[i] != null) &&
+                    (userInfo.passengerUser[i].getPassword().equals(password)) &&
+                    (userInfo.passengerUser[i].getUserName().equals(userName))){
+                index = i;
+//                flag = 1;
+            }
+        }
+//        if (flag == 0){
+//            index = 21;
+//        }
+    }
+    public boolean isAdmin(String userName , String password){
+//        findI(userName, password);
         if(userName.equals("admin") && password.equals("admin")){
             return true;
         }
         else {
-            System.out.println("Incorrect input !!!");
             return false;
         }
+    }
+    public boolean isRegisteredBefore(String userName, String password){
+        for (int i = 0; i < userInfo.passengerUser.length; i++) {
+            if (    (userInfo.passengerUser[i] != null) &&
+                    (userInfo.passengerUser[i].getUserName().equals(userName) &&
+                    userInfo.passengerUser[i].getPassword().equals(password))){
+                return true;
+            }
+        }
+        return false;
     }
 
     public String getPassword() {

@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class Passenger {
@@ -7,6 +5,7 @@ public class Passenger {
     Admin infoAdmin = new Admin();
     User[] passengerUser = new User[30];
     String string = new String();
+    Boolean[] showFilterItems;
 
     int i = 0;
     int number = 10;
@@ -99,6 +98,71 @@ public class Passenger {
         passengerUser[i].setPassword(password);
         i++;
     }
+    public void startFilter(){
+        showFilterItems = new Boolean[infoAdmin.flights.length];
+        for (int i = 0; i < showFilterItems.length; i++) {
+            showFilterItems[i] = false;
+        }
+    }
+    public void filterOriginMixed(){
+        System.out.println("Filtering Origin (Press N to escape)");
+        string = input.next();
+
+        for (int i = 0; i < infoAdmin.flights.length; i++) {
+            if ((infoAdmin.flights[i] != null) && (infoAdmin.flights[i].getOrigin().equals(string)) && (!string.equalsIgnoreCase("N"))) {
+                showFilterItems[i] = true;
+            }
+        }
+    }
+    public void filterDestinationMixed(){
+        System.out.println("Filtering Destination (Press N to escape)");
+        string = input.next();
+
+        for (int i = 0; i < infoAdmin.flights.length; i++) {
+            if ((infoAdmin.flights[i] != null) && (infoAdmin.flights[i].getDestination().equals(string)) && (!string.equalsIgnoreCase("N"))) {
+                showFilterItems[i] = true;
+            }
+        }
+    }
+    public void filterPriceMixed(){
+        System.out.println("Filtering Price (Press N to escape)");
+        string = input.next();
+
+        if(!string.equalsIgnoreCase("N")) {
+
+            System.out.println("============Defining price range============");
+            System.out.println("Enter the first range:");
+            int x = input.nextInt();
+            System.out.println("Enter the second range:");
+            int y = input.nextInt();
+            for (int i = 0; i < infoAdmin.flights.length; i++) {
+                if (infoAdmin.flights[i] != null) {
+                    if (checkValueBetween(x, y, i)) {
+                        showFilterItems[i] = true;
+                    }
+                }
+            }
+        }
+    }
+    public void printFilters(){
+        for (int i = 0; i < infoAdmin.flights.length; i++) {
+            if(showFilterItems[i].equals(true)){
+                printFlight(i);
+            }
+        }
+    }
+    public void resetFilters(){
+        for (int i = 0; i < infoAdmin.flights.length; i++) {
+            showFilterItems[i] = true;
+        }
+    }
+    public boolean checkValueBetween(int x, int y, int i){
+        if(infoAdmin.flights[i].getPrice() >= x && infoAdmin.flights[i].getPrice() <= y){
+            return true;
+        }
+        return false;
+    }
+
     public void charge(int chargeAmount){
         passengerUser[i].setCharge(chargeAmount);
     }
@@ -142,8 +206,12 @@ public class Passenger {
 
             case 2:
                 System.out.println("Filtering by some items");
-                System.out.println("This feature is in progress :)");
-
+                startFilter();
+                filterOriginMixed();
+                filterDestinationMixed();
+                filterPriceMixed();
+                printFilters();
+                resetFilters();
         }
     }
 
@@ -219,7 +287,7 @@ public class Passenger {
         System.out.println("    <4> Filter by Time");
         System.out.println("    <5> Filter by Price");
     }
-    private void printFlight(int i) {
+    public void printFlight(int i) {
         System.out.println(".....................................................................................................");
         System.out.printf("%-15s %-15s %-15s %-15s %-15s %-15d %-15d\n", infoAdmin.flights[i].getFlightId(), infoAdmin.flights[i].getOrigin(), infoAdmin.flights[i].getDestination(), infoAdmin.flights[i].getDate(), infoAdmin.flights[i].getTime(), infoAdmin.flights[i].getPrice(), infoAdmin.flights[i].getSeats());
     }
@@ -235,67 +303,4 @@ public class Passenger {
             }
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /*public List<FlightInfo> filterFlights(FlightInfo[] flights, String origin, String destination, String date, String time) {
-        List<FlightInfo> filteredFlights = new ArrayList<>();
-        for (FlightInfo flight : flights) {
-            if (flight.getOrigin().equals(origin) &&
-                    flight.getDestination().equals(destination) &&
-                    flight.getDate().equals(date) &&
-                    flight.getTime().equals(time)
-            ) {
-                filteredFlights.add(flight);
-            }
-        }
-        return filteredFlights;
-    }
-    */
-
-/*
-    boolean flagOrigin = true;
-    boolean flagDestination = true;
-    boolean flagDate = true;
-    boolean flagTime = true;
-    boolean flagPrice = true;
-    String wantedOrigin;
-    String wantedDestination;
-    String wantedDate;
-    String wantedTime;
-    int wantedPrice;
-    public void showFilter(){
-        for (int i = 0; i < infoAdmin.flights.length; i++) {
-            if(flagOrigin && infoAdmin.flights[i].getOrigin() != null){
-                System.out.println(infoAdmin.flights[i].getFlightId());
-            }
-            if(flagDestination && infoAdmin.flights[i].getDestination() != null){
-                System.out.println(infoAdmin.flights[i].getFlightId());
-            }
-            if(flagDate && infoAdmin.flights[i].getDate() != null){
-                System.out.println(infoAdmin.flights[i].getFlightId());
-            }
-            if(flagTime && infoAdmin.flights[i].getTime() != null){
-                System.out.println(infoAdmin.flights[i].getFlightId());
-            }
-
-        }
-    }
-    */
-
 }
