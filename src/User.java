@@ -4,7 +4,7 @@ public class User {
     private int charge;
     private String bookedTickets;
 
-    Passenger userInfo = new Passenger();
+    Passenger userInfo;
     String string = new String();
 
     public String getBookedTickets() {
@@ -41,9 +41,6 @@ public class User {
 //                flag = 1;
             }
         }
-//        if (flag == 0){
-//            index = 21;
-//        }
     }
     public boolean isAdmin(String userName , String password){
 //        findI(userName, password);

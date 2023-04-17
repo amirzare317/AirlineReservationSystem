@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class Passenger {
     Scanner input = new Scanner(System.in);
-    Admin infoAdmin = new Admin();
+    Admin infoAdmin;
     User[] passengerUser = new User[30];
     String string = new String();
     Boolean[] showFilterItems;
@@ -97,6 +97,10 @@ public class Passenger {
         passengerUser[i].setUserName(userName);
         passengerUser[i].setPassword(password);
         i++;
+    }
+    public void justTest(){
+        System.out.println(passengerUser[0].getUserName());
+        passengerUser[0].getPassword();
     }
     public void startFilter(){
         showFilterItems = new Boolean[infoAdmin.flights.length];

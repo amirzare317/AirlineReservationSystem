@@ -4,16 +4,16 @@ public class Admin {
 
     int i = 2;
     Scanner input = new Scanner(System.in);
-    String string = new String();
-    String str = new String();
+    String string = "";
+    String str = "";
 
     int num;
 
-    public Admin(){
+    public Admin() {
         tableOfFlights();
     }
 
-    public void showAdminMenu(){
+    public void showAdminMenu() {
         System.out.println("===========================");
         System.out.println("    Admin MENU OPTIONS");
         System.out.println("===========================");
@@ -25,7 +25,7 @@ public class Admin {
         System.out.println("    <0> Sign out");
     }
 
-    public void options(){
+    public void options() {
         int number = 10;
 
         while (number != 0) {
@@ -65,26 +65,30 @@ public class Admin {
             }
         }
     }
-    public FlightInfo[] flights = new FlightInfo[15];
-    public void tableOfFlights(){
 
-        flights[0] = new FlightInfo("WX-12" , "Yazd", "Tehran", "1401-12-10", "12:30", 700_000, 51 );
+    public FlightInfo[] flights = new FlightInfo[15];
+
+    public void tableOfFlights() {
+
+        flights[0] = new FlightInfo("WX-12", "Yazd", "Tehran", "1401-12-10", "12:30", 700_000, 51);
         flights[1] = new FlightInfo("WZ-15", "Mashhad", "Ahvaz", "1401-12-11", "08:00", 900_000, 245);
         flights[2] = new FlightInfo("BG-22", "Shiraz", "Tabriz", "1401-12-12", "22:30", 1_100_000, 12);
     }
-    public void showTable(){
+
+    public void showTable() {
         System.out.println("-----------------------------------------------------------------------------------------------------");
         System.out.printf("%-15s %-15s %-15s %-15s %-15s %-15s %-15s\n", "FlightId", "Origin", "Destination", "Date", "Time", "Price", "Seats");
         System.out.println("-----------------------------------------------------------------------------------------------------");
 
         for (int i = 0; i < flights.length; i++) {
-            if(flights[i] != null){
-            System.out.printf("%-15s %-15s %-15s %-15s %-15s %-15d %-15d\n", flights[i].getFlightId(), flights[i].getOrigin(), flights[i].getDestination(), flights[i].getDate(), flights[i].getTime(), flights[i].getPrice(), flights[i].getSeats());
-            System.out.println(".....................................................................................................");
-        }
+            if (flights[i] != null) {
+                System.out.printf("%-15s %-15s %-15s %-15s %-15s %-15d %-15d\n", flights[i].getFlightId(), flights[i].getOrigin(), flights[i].getDestination(), flights[i].getDate(), flights[i].getTime(), flights[i].getPrice(), flights[i].getSeats());
+                System.out.println(".....................................................................................................");
+            }
         }
     }
-    public void add(){
+
+    public void add() {
         ++i;
         flights[i] = new FlightInfo();
         System.out.println("Enter FlightID:");
@@ -108,27 +112,27 @@ public class Admin {
         System.out.println("Enter Free Seats:");
         flights[i].setSeats(input.nextInt());
     }
-    public void delete(String string){
+
+    public void delete(String string) {
         for (int i = 0; i < flights.length; i++) {
-            if (flights[i] != null && flights[i].getFlightId().equals(string)){
-                if(!flights[i].isAllow()){
+            if (flights[i] != null && flights[i].getFlightId().equals(string)) {
+                if (!flights[i].isAllow()) {
                     System.out.println("Some people has registered this flight.\nYou can't delete this flight!");
                     break;
                 }
                 flights[i] = null;
                 System.out.println("Flight deleted successfully");
-            }
-            else {
+            } else {
                 System.out.println("This flight ID is not valid");
                 break;
             }
         }
     }
 
-    public void update(String string){
+    public void update(String string) {
         for (int i = 0; i < flights.length; i++) {
-            if(flights[i] != null && flights[i].getFlightId().equals(string)){
-                if(!flights[i].isAllow()){
+            if (flights[i] != null && flights[i].getFlightId().equals(string)) {
+                if (!flights[i].isAllow()) {
                     System.out.println("Some people has registered this flight.\nYou can't update this flight!");
                     break;
                 }
@@ -145,8 +149,7 @@ public class Admin {
 
                 updateSeats(i);
                 System.out.println("Flight updated successfully");
-            }
-            else {
+            } else {
                 System.out.println("This flight ID is not valid");
                 break;
             }
@@ -156,7 +159,7 @@ public class Admin {
     private void updateSeats(int i) {
         System.out.println("Change Seats (Press N to escape)");
         str = input.next();
-        if(!str.equalsIgnoreCase("N")){
+        if (!str.equalsIgnoreCase("N")) {
             flights[i].setSeats(Integer.parseInt(str));
         }
     }
@@ -164,7 +167,7 @@ public class Admin {
     private void updatePrice(int i) {
         System.out.println("Change Price (Press N to escape)");
         str = input.next();
-        if(!str.equalsIgnoreCase("N")){
+        if (!str.equalsIgnoreCase("N")) {
             flights[i].setPrice(Integer.parseInt(str));
         }
     }
@@ -172,7 +175,7 @@ public class Admin {
     private void updateTime(int i) {
         System.out.println("Change Time (Press N to escape)");
         str = input.next();
-        if(!str.equalsIgnoreCase("N")){
+        if (!str.equalsIgnoreCase("N")) {
             flights[i].setTime(str);
         }
     }
@@ -180,7 +183,7 @@ public class Admin {
     private void updateDate(int i) {
         System.out.println("Change Date (Press N to escape)");
         str = input.next();
-        if(!str.equalsIgnoreCase("N")){
+        if (!str.equalsIgnoreCase("N")) {
             flights[i].setDate(str);
         }
     }
@@ -188,7 +191,7 @@ public class Admin {
     private void updateDestination(int i) {
         System.out.println("Change Destination (Press N to escape)");
         str = input.next();
-        if(!str.equalsIgnoreCase("N")){
+        if (!str.equalsIgnoreCase("N")) {
             flights[i].setDestination(str);
         }
     }
@@ -196,11 +199,10 @@ public class Admin {
     private void updateOrigin(int i) {
         System.out.println("Change Origin (Press N to escape)");
         str = input.next();
-        if(!str.equalsIgnoreCase("N")){
+        if (!str.equalsIgnoreCase("N")) {
             flights[i].setOrigin(str);
         }
     }
-
 
 
 }

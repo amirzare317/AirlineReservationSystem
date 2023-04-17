@@ -1,12 +1,15 @@
 import java.util.Scanner;
 
 public class Welcome {
-        public void welcomeMethod(){
-            Scanner input = new Scanner(System.in);
-            Admin admin = new Admin();
-            Passenger passenger = new Passenger();
+    public void welcomeMethod() {
+        Scanner input = new Scanner(System.in);
+        Admin admin = new Admin();
+        Passenger passenger = new Passenger();
+        passenger.infoAdmin = admin;
+        User user = new User();
+        user.userInfo = passenger;
 
-            while (true){
+        while (true) {
             System.out.println("==============================================");
             System.out.println("    Welcome to Airline Reservation System");
             System.out.println("==============================================");
@@ -14,9 +17,8 @@ public class Welcome {
             System.out.println("    <1> Sign in");
             System.out.println("    <2> Sign up");
             int num = input.nextInt();
-            if(num == 1){
+            if (num == 1) {
                 System.out.println("Signing in...");
-                User user = new User();
 
                 System.out.println("Enter Your Username");
                 String userName = input.next();
@@ -26,19 +28,18 @@ public class Welcome {
                 String password = input.next();
                 user.setPassword(password);
 
-                if(user.isAdmin(userName, password)){
+                if (user.isAdmin(userName, password)) {
                     admin.options();
                 }
-                if (user.isRegisteredBefore(userName, password)){
+                if (user.isRegisteredBefore(userName, password)) {
                     passenger.showPassengerMenu();
                     passenger.passengerOption();
-                }
-                else {
+                } else {
                     System.out.println("Incorrect input !!!");
                 }
 
             }
-            if(num == 2){
+            if (num == 2) {
                 System.out.println("Signing up...");
 
                 System.out.println("Create an Username");
@@ -51,8 +52,9 @@ public class Welcome {
 
                 passenger.showPassengerMenu();
                 passenger.passengerOption();
+
             }
         }
-        }
+    }
 
 }
