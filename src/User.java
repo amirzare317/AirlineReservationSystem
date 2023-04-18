@@ -30,18 +30,18 @@ public class User {
         this.userName = userName;
     }
 
-    int index = 20;
-    public void findI(String userName,String password){
-        int flag = 0;
-        for (int i = 0; i < userInfo.passengerUser.length; i++) {
-            if ((userInfo.passengerUser[i] != null) &&
-                    (userInfo.passengerUser[i].getPassword().equals(password)) &&
-                    (userInfo.passengerUser[i].getUserName().equals(userName))){
-                index = i;
-//                flag = 1;
-            }
-        }
-    }
+//    int index = 20;
+//    public void findI(String userName,String password){
+//        int flag = 0;
+//        for (int i = 0; i < userInfo.passengerUser.length; i++) {
+//            if ((userInfo.passengerUser[i] != null) &&
+//                    (userInfo.passengerUser[i].getPassword().equals(password)) &&
+//                    (userInfo.passengerUser[i].getUserName().equals(userName))){
+//                index = i;
+////                flag = 1;
+//            }
+//        }
+//    }
     public boolean isAdmin(String userName , String password){
 //        findI(userName, password);
         if(userName.equals("admin") && password.equals("admin")){

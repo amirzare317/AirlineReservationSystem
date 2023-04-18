@@ -34,7 +34,8 @@ public class Welcome {
                 if (user.isRegisteredBefore(userName, password)) {
                     passenger.showPassengerMenu();
                     passenger.passengerOption();
-                } else {
+                }
+                else {
                     System.out.println("Incorrect input !!!");
                 }
 

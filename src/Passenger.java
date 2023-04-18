@@ -6,8 +6,10 @@ public class Passenger {
     User[] passengerUser = new User[30];
     String string = new String();
     Boolean[] showFilterItems;
+    String[][] passengerFlightDetail = new String[15][30];
 
     int i = 0;
+    int j = 0;
     int number = 10;
 
     public void showPassengerMenu() {
@@ -34,7 +36,7 @@ public class Passenger {
                     System.out.println("Changing password...");
                     System.out.println("Enter your new password: ");
                     string = input.next();
-                    passengerUser[i].setUserName(string);
+                    passengerUser[i - 1].setPassword(string);
                     break;
                 case 2:
                     System.out.println("Searching flight tickets...");
@@ -44,13 +46,34 @@ public class Passenger {
                     System.out.println("Booking tickets");
                     System.out.println("Would you like to see flight table once again? Y or N");
                     string = input.next();
-                    bookTickets(string);
+                    if (string.equalsIgnoreCase("Y")) {
+                        showAllFlights();
+                    }
+                    System.out.println("Enter your intended flight ID to book it.");
+                    string = input.next();
+                    if (isEnoughSeat(string)) {
+                        if (isEnoughCharge(string)) {
+                            bookTickets(string);
+                        }
+                    }
                     break;
                 case 4:
                     System.out.println("Cancelling...");
+                    System.out.println("Would you like to see flight table once again? Y or N");
+                    string = input.next();
+                    if (string.equalsIgnoreCase("Y")) {
+                        showAllFlights();
+                    }
+                    System.out.println("Enter your intended flight ID to cancel it.");
+                    string = input.next();
+                    ticketCancellation(string);
+                    resetCharge(string);
+                    resetSeat(string);
+
                     break;
                 case 5:
                     System.out.println("Booked tickets...");
+                    showBookedFlights();
                     break;
                 case 6:
                     System.out.println("Adding charge...");
@@ -71,44 +94,126 @@ public class Passenger {
         }
     }
 
-    private void bookTickets(String string) {
-        if(string.equalsIgnoreCase("Y")){
-            showAllFlights();
-        }
-        System.out.println("Enter your intended flight ID to book it.");
-        string = input.next();
+    public void bookTickets(String string) {
         int flag = 0;
         for (int k = 0; k < infoAdmin.flights.length; k++) {
-            if(infoAdmin.flights[k].getFlightId().equals(string)){
+            if (infoAdmin.flights[k] != null && infoAdmin.flights[k].getFlightId().equals(string)) {
                 isAllowToChange(k);
+                passengerFlightDetail[i][j] = infoAdmin.flights[k].getFlightId();
+                System.out.println("Your ticket was successfully reserved");
+                updateSeat(string);
+                j++;
                 flag = 1;
             }
         }
-        if(flag == 0){
+        if (flag == 0) {
             System.out.println("This flight doesn't exist");
         }
     }
-    public void isAllowToChange(int number){
+
+    public void ticketCancellation(String string) {
+        int flag = 0;
+        for (int j = 0; j < 15; j++) {
+            if (passengerFlightDetail[i][j] != null && passengerFlightDetail[i][j].equals(string)) {
+                passengerFlightDetail[i][j] = null;
+                System.out.println("Your flight is canceled");
+                flag = 1;
+            }
+        }
+        if (flag == 0) {
+            System.out.println("You haven't register this flight before.");
+        }
+    }
+
+    public void showBookedFlights() {
+        for (int j = 0; j < 15; j++) {
+            if (passengerFlightDetail[i][j] != null) {
+                System.out.println(passengerFlightDetail[i][j]);
+            }
+        }
+    }
+
+    public boolean isEnoughCharge(String string) {
+        for (int k = 0; k < infoAdmin.flights.length; k++) {
+            if (infoAdmin.flights[k] != null && infoAdmin.flights[k].getFlightId().equals(string)) {
+                if (passengerUser[i - 1].getCharge() >= infoAdmin.flights[k].getPrice()) {
+                    return true;
+                } else {
+                    while (true) {
+                        System.out.println("Your charge is not enough -> If you want to charge enter 'Y' to charge your account");
+                        string = input.next();
+                        if (string.equalsIgnoreCase("Y")) {
+                            System.out.println("Enter the amount of money you want to charge");
+                            int chargeAmount = input.nextInt();
+                            charge(chargeAmount);
+                            System.out.println("You added " + passengerUser[i - 1].getCharge() + " to your wallet.");
+                            if (passengerUser[i - 1].getCharge() >= infoAdmin.flights[k].getPrice()) {
+                                passengerUser[i - 1].setCharge(((passengerUser[i - 1].getCharge()) + (infoAdmin.flights[k].getPrice() * (-1))));
+                                System.out.println("Now your charge is: " + passengerUser[i - 1].getCharge());
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean isEnoughSeat(String string) {
+        for (int k = 0; k < infoAdmin.flights.length; k++) {
+            if (infoAdmin.flights[k] != null && infoAdmin.flights[k].getSeats() > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public void updateSeat(String string){
+        for (int k = 0; k < infoAdmin.flights.length; k++) {
+            if (infoAdmin.flights[k] != null && infoAdmin.flights[k].getFlightId().equals(string)){
+                infoAdmin.flights[k].setSeats(infoAdmin.flights[k].getSeats() - 1);
+            }
+        }
+    }
+
+    public void resetCharge(String string) {
+        for (int k = 0; k < infoAdmin.flights.length; k++) {
+            if (infoAdmin.flights[k] != null && infoAdmin.flights[k].getFlightId().equals(string)) {
+                passengerUser[i - 1].setCharge(passengerUser[i - 1].getCharge() + infoAdmin.flights[k].getPrice());
+            }
+        }
+    }
+
+    public void resetSeat(String string) {
+        for (int k = 0; k < infoAdmin.flights.length; k++) {
+            if (infoAdmin.flights[k] != null && infoAdmin.flights[k].getFlightId().equals(string)) {
+                infoAdmin.flights[k].setSeats(infoAdmin.flights[k].getSeats() + 1);
+            }
+        }
+
+    }
+
+    public void isAllowToChange(int number) {
         infoAdmin.flights[number].setAllow(false);
     }
 
-    public void registration(String userName , String password){
+    public void registration(String userName, String password) {
         passengerUser[i] = new User();
         passengerUser[i].setUserName(userName);
         passengerUser[i].setPassword(password);
+        passengerFlightDetail[i][15] = new String();
         i++;
+        j = 0;
     }
-    public void justTest(){
-        System.out.println(passengerUser[0].getUserName());
-        passengerUser[0].getPassword();
-    }
-    public void startFilter(){
+
+    public void startFilter() {
         showFilterItems = new Boolean[infoAdmin.flights.length];
         for (int i = 0; i < showFilterItems.length; i++) {
             showFilterItems[i] = false;
         }
     }
-    public void filterOriginMixed(){
+
+    public void filterOriginMixed() {
         System.out.println("Filtering Origin (Press N to escape)");
         string = input.next();
 
@@ -118,7 +223,8 @@ public class Passenger {
             }
         }
     }
-    public void filterDestinationMixed(){
+
+    public void filterDestinationMixed() {
         System.out.println("Filtering Destination (Press N to escape)");
         string = input.next();
 
@@ -128,11 +234,12 @@ public class Passenger {
             }
         }
     }
-    public void filterPriceMixed(){
+
+    public void filterPriceMixed() {
         System.out.println("Filtering Price (Press N to escape)");
         string = input.next();
 
-        if(!string.equalsIgnoreCase("N")) {
+        if (!string.equalsIgnoreCase("N")) {
 
             System.out.println("============Defining price range============");
             System.out.println("Enter the first range:");
@@ -148,31 +255,34 @@ public class Passenger {
             }
         }
     }
-    public void printFilters(){
+
+    public void printFilters() {
         for (int i = 0; i < infoAdmin.flights.length; i++) {
-            if(showFilterItems[i].equals(true)){
+            if (showFilterItems[i].equals(true)) {
                 printFlight(i);
             }
         }
     }
-    public void resetFilters(){
+
+    public void resetFilters() {
         for (int i = 0; i < infoAdmin.flights.length; i++) {
             showFilterItems[i] = true;
         }
     }
-    public boolean checkValueBetween(int x, int y, int i){
-        if(infoAdmin.flights[i].getPrice() >= x && infoAdmin.flights[i].getPrice() <= y){
+
+    public boolean checkValueBetween(int x, int y, int i) {
+        if (infoAdmin.flights[i].getPrice() >= x && infoAdmin.flights[i].getPrice() <= y) {
             return true;
         }
         return false;
     }
 
-    public void charge(int chargeAmount){
-        passengerUser[i].setCharge(chargeAmount);
+    public void charge(int chargeAmount) {
+        passengerUser[i - 1].setCharge(chargeAmount);
     }
 
 
-    public void search(){
+    public void search() {
         System.out.println(".............How do you want to filter flights?.............\n" +
                 "   <1> Filter by one item\n" +
                 "   <2> Filter by some items\n");
@@ -228,45 +338,48 @@ public class Passenger {
                 flag = 1;
             }
         }
-        if(flag == 0){
+        if (flag == 0) {
             System.out.println("Your intended flight is not available");
         }
     }
+
     public void filterDestination() {
         string = input.next();
         int flag = 0;
         for (int i = 0; i < infoAdmin.flights.length; i++) {
-            if(infoAdmin.flights[i] != null && infoAdmin.flights[i].getDestination().equals(string)){
+            if (infoAdmin.flights[i] != null && infoAdmin.flights[i].getDestination().equals(string)) {
                 printFlight(i);
                 flag = 1;
             }
         }
-        if(flag == 0){
+        if (flag == 0) {
             System.out.println("Your intended flight is not available");
         }
     }
+
     public void filterDate() {
         string = input.next();
         int flag = 0;
         for (int i = 0; i < infoAdmin.flights.length; i++) {
-            if(infoAdmin.flights[i] != null && infoAdmin.flights[i].getDate().equals(string)){
+            if (infoAdmin.flights[i] != null && infoAdmin.flights[i].getDate().equals(string)) {
                 printFlight(i);
                 flag = 1;
             }
         }
-        if(flag == 0){
+        if (flag == 0) {
             System.out.println("Your intended flight is not available");
         }
     }
+
     public void filterTime() {
         int flag = 0;
         for (int i = 0; i < infoAdmin.flights.length; i++) {
-            if(infoAdmin.flights[i] != null && infoAdmin.flights[i].getTime().equals(string)){
+            if (infoAdmin.flights[i] != null && infoAdmin.flights[i].getTime().equals(string)) {
                 printFlight(i);
                 flag = 1;
             }
         }
-        if(flag == 0){
+        if (flag == 0) {
             System.out.println("Your intended flight is not available");
         }
     }
@@ -275,33 +388,36 @@ public class Passenger {
         string = input.next();
         int flag = 0;
         for (int i = 0; i < infoAdmin.flights.length; i++) {
-            if(infoAdmin.flights[i] != null && infoAdmin.flights[i].getPrice() == Integer.parseInt(string)){
+            if (infoAdmin.flights[i] != null && infoAdmin.flights[i].getPrice() == Integer.parseInt(string)) {
                 printFlight(i);
                 flag = 1;
             }
         }
-        if(flag == 0){
+        if (flag == 0) {
             System.out.println("Your intended flight is not available");
         }
     }
-    public void showFilterMenu(){
+
+    public void showFilterMenu() {
         System.out.println("    <1> Filter by Origin");
         System.out.println("    <2> Filter by Destination");
         System.out.println("    <3> Filter by Date");
         System.out.println("    <4> Filter by Time");
         System.out.println("    <5> Filter by Price");
     }
+
     public void printFlight(int i) {
         System.out.println(".....................................................................................................");
         System.out.printf("%-15s %-15s %-15s %-15s %-15s %-15d %-15d\n", infoAdmin.flights[i].getFlightId(), infoAdmin.flights[i].getOrigin(), infoAdmin.flights[i].getDestination(), infoAdmin.flights[i].getDate(), infoAdmin.flights[i].getTime(), infoAdmin.flights[i].getPrice(), infoAdmin.flights[i].getSeats());
     }
-    public void showAllFlights(){
+
+    public void showAllFlights() {
         System.out.println("-----------------------------------------------------------------------------------------------------");
         System.out.printf("%-15s %-15s %-15s %-15s %-15s %-15s %-15s\n", "FlightId", "Origin", "Destination", "Date", "Time", "Price", "Seats");
         System.out.println("-----------------------------------------------------------------------------------------------------");
 
         for (int i = 0; i < infoAdmin.flights.length; i++) {
-            if(infoAdmin.flights[i] != null){
+            if (infoAdmin.flights[i] != null) {
                 System.out.printf("%-15s %-15s %-15s %-15s %-15s %-15d %-15d\n", infoAdmin.flights[i].getFlightId(), infoAdmin.flights[i].getOrigin(), infoAdmin.flights[i].getDestination(), infoAdmin.flights[i].getDate(), infoAdmin.flights[i].getTime(), infoAdmin.flights[i].getPrice(), infoAdmin.flights[i].getSeats());
                 System.out.println(".....................................................................................................");
             }
