@@ -59,10 +59,13 @@ public class Passenger {
                     break;
                 case 4:
                     System.out.println("Cancelling...");
-                    System.out.println("Would you like to see flight table once again? Y or N");
-                    string = input.next();
-                    if (string.equalsIgnoreCase("Y")) {
-                        showAllFlights();
+                    System.out.println("This is all the flights you have reserved before...");
+                    for (int j = 0; j < infoAdmin.flights.length; j++) {
+                        if(passengerFlightDetail[i][j] != null){
+                            System.out.println(passengerFlightDetail[i][j]);
+                            System.out.println("i is:" + i);
+                            System.out.println("j is:" + j);
+                        }
                     }
                     System.out.println("Enter your intended flight ID to cancel it.");
                     string = input.next();
@@ -99,7 +102,7 @@ public class Passenger {
         for (int k = 0; k < infoAdmin.flights.length; k++) {
             if (infoAdmin.flights[k] != null && infoAdmin.flights[k].getFlightId().equals(string)) {
                 isAllowToChange(k);
-                passengerFlightDetail[i][j] = infoAdmin.flights[k].getFlightId();
+                passengerFlightDetail[i][j] = infoAdmin.flights[k].getFlightId() + infoAdmin.flights[k].getDate() + "#" + infoAdmin.flights[k].getSeats();
                 System.out.println("Your ticket was successfully reserved");
                 updateSeat(string);
                 j++;
@@ -126,9 +129,14 @@ public class Passenger {
     }
 
     public void showBookedFlights() {
-        for (int j = 0; j < 15; j++) {
+        for (int j = 0; j < infoAdmin.flights.length; j++) {
             if (passengerFlightDetail[i][j] != null) {
-                System.out.println(passengerFlightDetail[i][j]);
+                for (int l = 0; l < infoAdmin.flights.length; l++) {
+                    if (infoAdmin.flights[l] != null && passengerFlightDetail[i][j].contains(infoAdmin.flights[l].getFlightId())){
+                        printFlight(l);
+                    }
+                }
+
             }
         }
     }
@@ -158,6 +166,9 @@ public class Passenger {
             }
         }
         return false;
+    }
+    public void IdGenerator(String flightId, String date, String time, String seats){
+        
     }
 
     public boolean isEnoughSeat(String string) {
