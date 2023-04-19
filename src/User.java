@@ -52,10 +52,10 @@ public class User {
         }
     }
     public boolean isRegisteredBefore(String userName, String password){
-        for (int i = 0; i < userInfo.passengerUser.length; i++) {
-            if (    (userInfo.passengerUser[i] != null) &&
-                    (userInfo.passengerUser[i].getUserName().equals(userName) &&
-                    userInfo.passengerUser[i].getPassword().equals(password))){
+        for (int k = 0; k < userInfo.passengerUser.length; k++) {
+            if (    (userInfo.passengerUser[k] != null) &&
+                    (userInfo.passengerUser[k].getUserName().equals(userName) &&
+                    userInfo.passengerUser[k].getPassword().equals(password))){
                 return true;
             }
         }

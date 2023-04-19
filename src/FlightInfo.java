@@ -8,23 +8,14 @@ public class FlightInfo {
     private int seats;
     private boolean isAllow = true;
 
+    public void setAllow(boolean allow) {
+        isAllow = allow;
+    }
     public boolean isAllow() {
         return isAllow;
     }
 
-    public void setAllow(boolean allow) {
-        isAllow = allow;
-    }
 
-    private boolean show = true;
-
-    public void setShow(boolean show) {
-        this.show = show;
-    }
-
-    public boolean isShow() {
-        return show;
-    }
 
     public FlightInfo(String flightId, String origin, String destination, String date, String time, int price, int seats) {
         this.flightId = flightId;

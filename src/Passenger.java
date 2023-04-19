@@ -5,17 +5,17 @@ public class Passenger {
     Admin infoAdmin;
     User[] passengerUser = new User[30];
     String string = new String();
+    String str = new String();
     Boolean[] showFilterItems;
     String[][] passengerFlightDetail = new String[15][30];
-
     int i = 0;
-    int j = 0;
+    int lineOrder = 0;
     int number = 10;
 
     public void showPassengerMenu() {
-        System.out.println("===========================");
+        System.out.println("==============================");
         System.out.println("    PASSENGER MENU OPTIONS");
-        System.out.println("===========================");
+        System.out.println("==============================");
         System.out.println(". . . . . . . . . . . . . .");
         System.out.println("    <1> Change password");
         System.out.println("    <2> Search flight tickets");
@@ -28,8 +28,8 @@ public class Passenger {
     }
 
     public void passengerOption() {
+        number = 10;
         while (number != 0) {
-            number = 10;
             number = input.nextInt();
             switch (number) {
                 case 1:
@@ -61,17 +61,18 @@ public class Passenger {
                     System.out.println("Cancelling...");
                     System.out.println("This is all the flights you have reserved before...");
                     for (int j = 0; j < infoAdmin.flights.length; j++) {
-                        if(passengerFlightDetail[i][j] != null){
-                            System.out.println(passengerFlightDetail[i][j]);
-                            System.out.println("i is:" + i);
-                            System.out.println("j is:" + j);
+                        if (passengerFlightDetail[i - 1][j] != null) {
+                            System.out.println("Your reservation code is: " + passengerFlightDetail[i - 1][j]);
                         }
                     }
                     System.out.println("Enter your intended flight ID to cancel it.");
+                    str = input.next();
+                    System.out.println("Enter your reservation code to cancel it.");
                     string = input.next();
                     ticketCancellation(string);
                     resetCharge(string);
                     resetSeat(string);
+                    resetAllow(str);
 
                     break;
                 case 5:
@@ -83,7 +84,7 @@ public class Passenger {
                     System.out.println("Enter the amount of money you want to charge");
                     int chargeAmount = input.nextInt();
                     charge(chargeAmount);
-                    System.out.println("Your charge is: " + passengerUser[i].getCharge());
+                    System.out.println("Your charge is: " + passengerUser[i - 1].getCharge());
                     break;
                 case 7:
                     System.out.println("All flights:");
@@ -102,10 +103,12 @@ public class Passenger {
         for (int k = 0; k < infoAdmin.flights.length; k++) {
             if (infoAdmin.flights[k] != null && infoAdmin.flights[k].getFlightId().equals(string)) {
                 isAllowToChange(k);
-                passengerFlightDetail[i][j] = infoAdmin.flights[k].getFlightId() + infoAdmin.flights[k].getDate() + "#" + infoAdmin.flights[k].getSeats();
+                passengerFlightDetail[i - 1][lineOrder] = infoAdmin.flights[k].getFlightId() + infoAdmin.flights[k].getDate() + "#" + infoAdmin.flights[k].getSeats();
+
                 System.out.println("Your ticket was successfully reserved");
                 updateSeat(string);
-                j++;
+                infoAdmin.flights[k].setAllow(false);
+                lineOrder++;
                 flag = 1;
             }
         }
@@ -117,8 +120,8 @@ public class Passenger {
     public void ticketCancellation(String string) {
         int flag = 0;
         for (int j = 0; j < 15; j++) {
-            if (passengerFlightDetail[i][j] != null && passengerFlightDetail[i][j].equals(string)) {
-                passengerFlightDetail[i][j] = null;
+            if (passengerFlightDetail[i - 1][j] != null && passengerFlightDetail[i - 1][j].equals(string)) {
+                passengerFlightDetail[i - 1][j] = null;
                 System.out.println("Your flight is canceled");
                 flag = 1;
             }
@@ -130,13 +133,12 @@ public class Passenger {
 
     public void showBookedFlights() {
         for (int j = 0; j < infoAdmin.flights.length; j++) {
-            if (passengerFlightDetail[i][j] != null) {
-                for (int l = 0; l < infoAdmin.flights.length; l++) {
-                    if (infoAdmin.flights[l] != null && passengerFlightDetail[i][j].contains(infoAdmin.flights[l].getFlightId())){
-                        printFlight(l);
+            if (passengerFlightDetail[i - 1][j] != null) {
+                for (int k = 0; k < infoAdmin.flights.length; k++) {
+                    if ((infoAdmin.flights[k] != null) && (passengerFlightDetail[i - 1][j].contains(infoAdmin.flights[k].getFlightId()))) {
+                        printFlight(k);
                     }
                 }
-
             }
         }
     }
@@ -148,7 +150,7 @@ public class Passenger {
                     return true;
                 } else {
                     while (true) {
-                        System.out.println("Your charge is not enough -> If you want to charge enter 'Y' to charge your account");
+                        System.out.println("Your charge is not enough -> If you want to charge enter 'Y' to charge your account. At least you need " + infoAdmin.flights[k].getPrice());
                         string = input.next();
                         if (string.equalsIgnoreCase("Y")) {
                             System.out.println("Enter the amount of money you want to charge");
@@ -156,6 +158,7 @@ public class Passenger {
                             charge(chargeAmount);
                             System.out.println("You added " + passengerUser[i - 1].getCharge() + " to your wallet.");
                             if (passengerUser[i - 1].getCharge() >= infoAdmin.flights[k].getPrice()) {
+                                //Set the new amount of charge
                                 passengerUser[i - 1].setCharge(((passengerUser[i - 1].getCharge()) + (infoAdmin.flights[k].getPrice() * (-1))));
                                 System.out.println("Now your charge is: " + passengerUser[i - 1].getCharge());
                                 return true;
@@ -167,8 +170,22 @@ public class Passenger {
         }
         return false;
     }
-    public void IdGenerator(String flightId, String date, String time, String seats){
-        
+    public void resetAllow(String str){
+        for (int n = 0; n < 15; n++) {
+            for (int m = 0; m < 30; m++) {
+                if(passengerFlightDetail[n][m] != null && (!passengerFlightDetail[n][m].contains(str))){
+                    infoAdmin.flights[findFlightIndex(str)].setAllow(true);
+                }
+            }
+        }
+    }
+    public int findFlightIndex(String str){
+        for (int k = 0; k < infoAdmin.flights.length; k++) {
+            if (infoAdmin.flights[k] != null && infoAdmin.flights[k].getFlightId().equals(str)){
+                return k;
+            }
+        }
+        return 100;
     }
 
     public boolean isEnoughSeat(String string) {
@@ -178,10 +195,12 @@ public class Passenger {
             }
         }
         return false;
+
     }
-    public void updateSeat(String string){
+
+    public void updateSeat(String string) {
         for (int k = 0; k < infoAdmin.flights.length; k++) {
-            if (infoAdmin.flights[k] != null && infoAdmin.flights[k].getFlightId().equals(string)){
+            if (infoAdmin.flights[k] != null && infoAdmin.flights[k].getFlightId().equals(string)) {
                 infoAdmin.flights[k].setSeats(infoAdmin.flights[k].getSeats() - 1);
             }
         }
@@ -214,7 +233,16 @@ public class Passenger {
         passengerUser[i].setPassword(password);
         passengerFlightDetail[i][15] = new String();
         i++;
-        j = 0;
+        lineOrder = 0;
+        System.out.println("Congratulation! Your registration was successful");
+    }
+
+    public void defineI(String password) {
+        for (int k = 0; k < passengerUser.length; k++) {
+            if (passengerUser[k] != null && passengerUser[k].getPassword().equals(password)) {
+                i = k + 1;
+            }
+        }
     }
 
     public void startFilter() {

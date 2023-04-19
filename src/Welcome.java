@@ -34,6 +34,7 @@ public class Welcome {
                 if (user.isRegisteredBefore(userName, password)) {
                     passenger.showPassengerMenu();
                     passenger.passengerOption();
+                    passenger.defineI(password);
                 }
                 else {
                     System.out.println("Incorrect input !!!");
@@ -50,9 +51,6 @@ public class Welcome {
                 String passengerPassword = input.next();
 
                 passenger.registration(passengerUserName, passengerPassword);
-
-                passenger.showPassengerMenu();
-                passenger.passengerOption();
 
             }
         }
