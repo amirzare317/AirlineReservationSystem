@@ -1,9 +1,15 @@
 import java.util.Scanner;
 
 public class Welcome {
+    /**
+     * In this method, the welcome menu will be presented to users.
+     * This loop never finish until the you end the program yourself.
+     */
     public void welcomeMethod() {
         Scanner input = new Scanner(System.in);
+        // An instance from Admin class.
         Admin admin = new Admin();
+        // An instance from Passenger class.
         Passenger passenger = new Passenger();
         passenger.infoAdmin = admin;
         User user = new User();
@@ -35,8 +41,7 @@ public class Welcome {
                     passenger.showPassengerMenu();
                     passenger.passengerOption();
                     passenger.defineI(password);
-                }
-                else {
+                } else {
                     System.out.println("Incorrect input !!!");
                 }
 

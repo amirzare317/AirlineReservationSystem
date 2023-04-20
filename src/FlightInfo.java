@@ -11,10 +11,10 @@ public class FlightInfo {
     public void setAllow(boolean allow) {
         isAllow = allow;
     }
+
     public boolean isAllow() {
         return isAllow;
     }
-
 
 
     public FlightInfo(String flightId, String origin, String destination, String date, String time, int price, int seats) {
