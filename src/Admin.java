@@ -33,7 +33,7 @@ public class Admin {
     }
 
     /**
-     * Just to show the passenger menu after each action.
+     * Just to show the admin menu after each action.
      */
     public void showAdminMenuAgain(){
         System.out.println("Press any key to continue...");
