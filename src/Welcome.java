@@ -35,6 +35,7 @@ public class Welcome {
                 user.setPassword(password);
 
                 if (user.isAdmin(userName, password)) {
+                    admin.showAdminMenu();
                     admin.options();
                 }
                 if (user.isRegisteredBefore(userName, password)) {

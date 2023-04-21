@@ -33,32 +33,45 @@ public class Admin {
     }
 
     /**
+     * Just to show the passenger menu after each action.
+     */
+    public void showAdminMenuAgain(){
+        System.out.println("Press any key to continue...");
+        string = input.next();
+        System.out.print("\033[H\033[2J");
+        showAdminMenu();
+    }
+
+    /**
      * When the menu showed, by entering any button which is designed here, the program will start to run.
      */
     public void options() {
         int number = 10;
         while (number != 0) {
-            showAdminMenu();
             number = input.nextInt();
             switch (number) {
                 case 1:
                     System.out.println("Adding...");
                     add();
+                    showAdminMenuAgain();
                     break;
                 case 2:
                     System.out.println("Updating...");
                     System.out.println("Enter the flight ID:");
                     string = input.next();
                     update(string);
+                    showAdminMenuAgain();
                     break;
                 case 3:
                     System.out.println("Deleting...");
                     System.out.println("Enter the flight ID:");
                     string = input.next();
                     delete(string);
+                    showAdminMenuAgain();
                     break;
                 case 4:
                     showTable();
+                    showAdminMenuAgain();
                     break;
                 case 0:
                     break;
@@ -104,7 +117,7 @@ public class Admin {
      * Hint: Admin is allowed to add flights up to 15.
      */
     public void add() {
-        ++i;
+        i++;
         flights[i] = new FlightInfo();
         System.out.println("Enter FlightID:");
         flights[i].setFlightId(input.next());
@@ -157,9 +170,10 @@ public class Admin {
      *               So that you have accesses to any details of intended flight.
      */
     public void update(String string) {
+        int flag = 0;
         for (int i = 0; i < flights.length; i++) {
             if (flights[i] != null && flights[i].getFlightId().equals(string)) {
-
+                flag = 1;
                 if (!flights[i].isAllow()) {
                     System.out.println("Some people has registered this flight.\nYou can't update this flight!");
                     break;
@@ -177,10 +191,10 @@ public class Admin {
 
                 updateSeats(i);
                 System.out.println("Flight updated successfully");
-            } else {
-                System.out.println("This flight ID is not valid");
-                break;
             }
+        }
+        if (flag == 0) {
+            System.out.println("This flight ID is not valid");
         }
     }
 

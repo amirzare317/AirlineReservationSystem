@@ -46,6 +46,16 @@ public class Passenger {
     }
 
     /**
+     * Just to show the passenger menu after each action.
+     */
+    public void setShowPassengerMenuAgain(){
+        System.out.println("Press any key to continue...");
+        string = input.next();
+        System.out.print("\033[H\033[2J");
+        showPassengerMenu();
+    }
+
+    /**
      * When the menu showed, by entering any button which is designed here, the program will start to run.
      */
     public void passengerOption() {
@@ -58,10 +68,12 @@ public class Passenger {
                     System.out.println("Enter your new password: ");
                     string = input.next();
                     passengerUser[i - 1].setPassword(string);
+                    setShowPassengerMenuAgain();
                     break;
                 case 2:
                     System.out.println("Searching flight tickets...");
                     search();
+                    setShowPassengerMenuAgain();
                     break;
                 case 3:
                     System.out.println("Booking tickets");
@@ -77,6 +89,7 @@ public class Passenger {
                             bookTickets(string);
                         }
                     }
+                    setShowPassengerMenuAgain();
                     break;
                 case 4:
                     System.out.println("Cancelling...");
@@ -94,11 +107,12 @@ public class Passenger {
                     resetCharge(string);
                     resetSeat(string);
                     resetAllow(str);
-
+                    setShowPassengerMenuAgain();
                     break;
                 case 5:
                     System.out.println("Booked tickets...");
                     showBookedFlights();
+                    setShowPassengerMenuAgain();
                     break;
                 case 6:
                     System.out.println("Adding charge...");
@@ -106,10 +120,13 @@ public class Passenger {
                     int chargeAmount = input.nextInt();
                     charge(chargeAmount);
                     System.out.println("Your charge is: " + passengerUser[i - 1].getCharge());
+                    setShowPassengerMenuAgain();
                     break;
                 case 7:
                     System.out.println("All flights:");
                     showAllFlights();
+                    setShowPassengerMenuAgain();
+                    break;
                 case 0:
                     break;
                 default:
@@ -318,6 +335,7 @@ public class Passenger {
         passengerFlightDetail[i][15] = new String();
         i++;
         lineOrder = 0;
+        System.out.print("\033[H\033[2J");
         System.out.println("Congratulation! Your registration was successful");
     }
 
